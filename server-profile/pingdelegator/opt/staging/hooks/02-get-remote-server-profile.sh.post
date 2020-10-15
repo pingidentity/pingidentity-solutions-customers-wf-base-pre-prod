@@ -1,0 +1,86 @@
+#!/usr/bin/env sh
+#
+# Ping Identity DevOps - Docker Build Hooks
+#
+#- This hook may be used to set the server if there is a setup procedure
+#
+#- >Note: The PingData (i.e. Directory, DataSync, DataGovernance, DirectoryProxy)
+#- products will all provide this
+
+# shellcheck source=../../../../pingcommon/opt/staging/hooks/pingcommon.lib.sh
+. "${HOOKS_DIR}/pingcommon.lib.sh"
+
+#
+# Following is provided to support existing implemetnations using legacy certificate locations
+_legacyCertificateFile="${STAGING_DIR}/.sec/nginx.crt"
+_legacyCertificateKeyFile="${STAGING_DIR}/.sec/nginx.key"
+
+if test ! -d "${SECRETS_DIR}"; then
+    echo "WARNING: Important that the orchestration environment create a tmpfs for '${SECRETS_DIR}'"
+    echo "         Using 'tmp/secrets' for now."
+    SECRETS_DIR="/tmp/secrets"
+    mkdir -p "${SECRETS_DIR}"
+fi
+
+# Get the certificate and key if they are provided
+if test -n "${CERTIFICATE_FILE}"
+then
+    if ! test -f "${CERTIFICATE_FILE}"
+    then
+        container_failure 2 "CERTIFICATE_FILE value [${CERTIFICATE_FILE}] is invalid: the specified file does not exist"
+    else
+        _nginxCrt="${CERTIFICATE_FILE}"
+    fi
+else
+    if test -f "${_legacyCertificateFile}" ; then
+        echo "WARNING: Using a legacy location for certificate '${_legacyCertificateFile}'"
+        echo "         Consider moving to a vault secret location"
+        _nginxCrt="${_legacyCertificateFile}"
+    else
+        _nginxCrt="${SECRETS_DIR}/nginx.crt"
+    fi
+fi
+
+if test -n "${CERTIFICATE_KEY_FILE}"
+then
+    if ! test -f "${CERTIFICATE_KEY_FILE}"
+    then
+        container_failure 2 "CERTIFICATE_KEY_FILE value [${CERTIFICATE_KEY_FILE}] is invalid: the specified file does not exist"
+    else
+        _nginxKey="${CERTIFICATE_KEY_FILE}"
+    fi
+else
+    if test -f "${_legacyCertificateKeyFile}" ; then
+        echo "WARNING: Using a legacy location for certificate key file '${_legacyCertificateKeyFile}'"
+        echo "         Consider moving to a vault secret location"
+        _nginxKey="${_legacyCertificateKeyFile}"
+    else
+        _nginxKey="${SECRETS_DIR}/nginx.key"
+    fi
+fi
+
+if ! test -f "${_nginxCrt}" ;
+then
+    if ! test -f "${_nginxKey}" ;
+    then
+        head -c 1024 /dev/urandom | tr -dc 'a-zA-Z0-9-' | cut -c 1-64 > "${_nginxKey}"
+    fi
+
+    openssl req \
+        -x509 \
+        -nodes \
+        -days 365 \
+        -subj "/C=us/ST=co/O=pingidentity/OU=docker/CN=dev" \
+        -addext "subjectAltName=DNS:${PD_DELEGATOR_PUBLIC_HOSTNAME}, DNS:localhost, IP:127.0.0.1" \
+        -newkey rsa:2048 \
+        -keyout "${_nginxKey}" \
+        -out ${_nginxCrt};
+fi
+
+CERTIFICATE_FILE="${_nginxCrt}"
+CERTIFICATE_KEY_FILE="${_nginxKey}"
+
+echo "Using CERTIFICATE_FILE=${CERTIFICATE_FILE}"
+echo "Using CERTIFICATE_KEY_FILE=${CERTIFICATE_KEY_FILE}"
+
+export_container_env SECRETS_DIR CERTIFICATE_FILE CERTIFICATE_KEY_FILE
