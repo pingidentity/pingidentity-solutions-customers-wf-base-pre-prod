@@ -57,6 +57,11 @@ TBD
      * User: Administrator
      * Password: 2Federate
 
+   * PingDelegator
+     * Console URL: `https://localhost:6443`
+     * User: Administrator
+     * Password: 2FederateM0re
+
 3. How to test a SAML application/connection:
     - From the PingFederate home page, select "SP Connections"
     - Next, select the "Sample SAML Connection"
