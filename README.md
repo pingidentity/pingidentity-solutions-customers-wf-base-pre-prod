@@ -2,7 +2,7 @@
 
 ## Overview
 
-TBD
+Below are steps on how to deploy the solution along with testing a couple of features
 
 ## Deploying using Docker-Compose
 
