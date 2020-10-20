@@ -10,7 +10,7 @@ Below are steps on how to deploy the solution along with testing a couple of fea
 
    > For your initial deployment of the stack, we recommend you make no changes to the `docker-compose.yaml` file to ensure you have a successful first-time deployment.
 
-   a. To start the stack, go to your local `ping-celero/workforce360/` directory and enter:
+   a. To start the stack, go to your local `workforce360` directory and enter:
 
    ```shell
    docker-compose up -d
