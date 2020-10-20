@@ -1,0 +1,44 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="urn:amazon:webservices" validUntil="2020-04-03T00:00:00Z">
+<SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" WantAssertionsSigned="true">
+<KeyDescriptor use="signing">
+<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:X509Data>
+<ds:X509Certificate>
+MIIDbTCCAlWgAwIBAgIEcbCqCzANBgkqhkiG9w0BAQsFADBnMR8wHQYDVQQDExZ1 cm46YW1hem9uOndlYnNlcnZpY2VzMSIwIAYDVQQKExlBbWF6b24gV2ViIFNlcnZp Y2VzLCBJbmMuMRMwEQYDVQQIEwpXYXNoaW5ndG9uMQswCQYDVQQGEwJVUzAeFw0x OTA0MDMwMDAwMDBaFw0yMDA0MDIwMDAwMDBaMGcxHzAdBgNVBAMTFnVybjphbWF6 b246d2Vic2VydmljZXMxIjAgBgNVBAoTGUFtYXpvbiBXZWIgU2VydmljZXMsIElu Yy4xEzARBgNVBAgTCldhc2hpbmd0b24xCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG 9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoD2r94mjJSilp2/HN9iznnmgMfEbxRsSG5DD Hu59qfxTXzl2TvjRuQ97n3nlLa3uNgxvIBLmrXaJicjou+iRDPndTLNm1yoAvkoL O/sQ4vmiRSlTAifzS9gHsn+QWVE9sUqrcIGcdFV/Mfy8F+7f7BXTJxu4Y6gkRnor 5RLrd8e3xpPpwTd4j5/uwgBA/1TZ3qs9RMcBkz3MdNMG8Kx300oPbGw8JZLrLUV3 gvrN76uKYB7o2S4o+QuaVdiYaGZUzBRj3I47BoZQFwrRvOBGyb0UhSRgFswbrJLo m3resAFelaocameyf2/OOfwQ5AzrLRNOK+2p2tnxFbrRSjOWPQIDAQABoyEwHzAd BgNVHQ4EFgQUEdZUbJp32FhrfeVG8z1RW4XYukIwDQYJKoZIhvcNAQELBQADggEB AEzNbgQy+etS/YHGCcqGovCQn5oyui270tpPPo296vYm4oGHxdpBkIo/qgnx0gqg EgwKtQebgOxN+7qNK8SMXqu5WuYeHfI6S12THtJQXuk3cvb6mhk92rU4krC8wrbt OvjU6Y7LcMaSTwsxhLa7hZYr6cVluqfMXbYU8A8U5NpbxTlqKtLenfRmY6Au22D4 gIrjCIcsGjuPSz012H6d5L/dpXOoIGc3R9lu7QQaJUlZ3naKcv4R7nb1Q66x04qe zT9P6grEezhV5htJDP1tBf1xqHmUPPk1xc7p2PdBQX8nj1fk5dbjntxd6S1IZU7l 5EWs9BnSt2UGqfsVEBddSA0=
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</KeyDescriptor>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+</NameIDFormat>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+</NameIDFormat>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+</NameIDFormat>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+</NameIDFormat>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
+</NameIDFormat>
+<NameIDFormat>
+urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName
+</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+<NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+<AssertionConsumerService index="1" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://signin.aws.amazon.com/saml"/>
+<AttributeConsumingService index="1">
+<ServiceName xml:lang="en">AWS Management Console Single Sign-On</ServiceName>
+<RequestedAttribute isRequired="true" Name="https://aws.amazon.com/SAML/Attributes/Role" FriendlyName="RoleEntitlement"/>
+<RequestedAttribute isRequired="true" Name="https://aws.amazon.com/SAML/Attributes/RoleSessionName" FriendlyName="RoleSessionName"/>
+</AttributeConsumingService>
+</SPSSODescriptor>
+<Organization>
+<OrganizationName xml:lang="en">Amazon Web Services, Inc.</OrganizationName>
+<OrganizationDisplayName xml:lang="en">AWS</OrganizationDisplayName>
+<OrganizationURL xml:lang="en">https://aws.amazon.com</OrganizationURL>
+</Organization>
+</EntityDescriptor>
