@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor
+  urn:name="Atlassian Cloud Connector"
+  xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+  xmlns:urn="urn:sourceid.org:saml2:metadata-extension:v2"
+  entityID="https://auth.atlassian.com/saml/${tenantSsoId}">
+  <md:SPSSODescriptor AuthnRequestsSigned="false"
+    WantAssertionsSigned="true"
+    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+    <md:AssertionConsumerService
+      isDefault="true"
+      Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+      Location="https://auth.atlassian.com/login/callback?connection=saml-${tenantSsoId}"
+      index="0" />
+    <md:AttributeConsumingService index="0" isDefault="true">
+
+      <md:RequestedAttribute
+        FriendlyName="givenName"
+        Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" />
+      <md:RequestedAttribute
+        FriendlyName="surname"
+        Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" />
+      <md:RequestedAttribute FriendlyName="name"
+        Name="http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+        NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" />
+
+    </md:AttributeConsumingService>
+  </md:SPSSODescriptor>
+</md:EntityDescriptor>
