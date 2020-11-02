@@ -1,0 +1,121 @@
+version: "2.4"
+services:
+  pingfederate:
+    image: pingidentity/pingfederate:latest
+    command: wait-for pingdirectory:389 -t 600 -- entrypoint.sh start-server
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ports:
+      - "9031:9031"
+      - "9999:9999"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingfederate:/opt/in
+      - pingfederate-out:/opt/out
+
+  pingdirectory:
+    image: pingidentity/pingdirectory:latest
+    environment:
+      - MAX_HEAP_SIZE=768m
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ulimits:
+      nproc:
+        soft: 16384
+        hard: 16384
+      nofile:
+        soft: 65535
+        hard: 65535
+    tmpfs: /run/secrets
+    ports:
+      - "1636:636"
+      - "1443:443"
+      - "1389:389"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingdirectory:/opt/in
+      - pingdirectory-out:/opt/out
+
+  pingdataconsole:
+    image: pingidentity/pingdataconsole:latest
+    ports:
+      - "8443:8443"
+    networks:
+      - pingnet
+
+  pingcentral:
+    image: pingidentity/pingcentral:latest
+    environment:
+      #- SERVER_PROFILE_URL=https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/pingidentity/ping-celero
+      #- SERVER_PROFILE_PATH=workforce360/server-profile/pingcentral/dev-unsecure
+      - PING_CENTRAL_BLIND_TRUST=true
+      - PING_CENTRAL_LOG_LEVEL=DEBUG
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ports:
+      - "9022:9022"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingcentral/dev-unsecure:/opt/in
+      - pingcentral-out:/opt/out
+
+  pingdatasync:
+    image: pingidentity/pingdatasync:latest
+    environment:
+      #- SERVER_PROFILE_URL=https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/pingidentity/ping-celero
+      #- SERVER_PROFILE_PATH=workforce360/server-profile/pingdatasync
+      - USER_BASE_DN=o=sync
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ulimits:
+      nproc:
+        soft: 16384
+        hard: 16384
+      nofile:
+        soft: 65535
+        hard: 65535
+    ports:
+      - "2636:636"
+      - "2443:443"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingdatasync:/opt/in
+      - pingdatasync-out:/opt/out
+
+#  pingdelegator:
+#    image: pingidentity/pingdelegator:latest
+#    environment:
+#      - PD_ENGINE_PUBLIC_PORT=1443
+#      #- SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-server-profiles.git
+#      #- SERVER_PROFILE_PATH=baseline/pingdelegator
+#    env_file:
+#      - ${HOME}/.pingidentity/devops
+#    ports:
+#      - "6443:6443"
+#    networks:
+#      - pingnet
+
+  sut:
+    image: postman/newman
+    entrypoint: ["/usr/bin/env"]
+    command: sh -c "/tmp/wait-for pingfederate:9031 -t 900 -- newman run /tmp/collection.json --insecure --ignore-redirects"
+    volumes:
+      - ./solutions.postman_collection.json:/tmp/collection.json
+      - ./wait-for:/tmp/wait-for
+    depends_on:
+      - pingfederate
+    networks:
+      - pingnet
+
+networks:
+    pingnet:
+
+volumes:
+  pingfederate-out:
+  pingdirectory-out:
+  pingcentral-out:
+  pingdatasync-out:

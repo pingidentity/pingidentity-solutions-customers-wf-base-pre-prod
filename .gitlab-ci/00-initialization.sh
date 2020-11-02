@@ -1,6 +1,9 @@
 #!/bin/bash
 set -xeo pipefail
 
+cat /etc/os-release
+which newman
+
 pwd
 env
 echo "$USER"
