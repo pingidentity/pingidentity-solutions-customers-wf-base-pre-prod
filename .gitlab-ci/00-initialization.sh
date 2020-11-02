@@ -1,8 +1,7 @@
 #!/bin/bash
 set -xeo pipefail
 
-cat /etc/os-release
-which newman
+newman -v
 
 pwd
 env
