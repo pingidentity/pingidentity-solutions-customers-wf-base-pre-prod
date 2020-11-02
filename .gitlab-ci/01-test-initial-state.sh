@@ -30,6 +30,6 @@ docker-compose --verbose up \
   --force-recreate
 
 for script in .gitlab-ci/tests.d/*.sh; do
-  bash $script || exit 1
   echo "Executing $script..."
+  bash $script || exit 1
 done
