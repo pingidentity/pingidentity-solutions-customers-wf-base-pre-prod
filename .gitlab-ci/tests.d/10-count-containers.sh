@@ -12,7 +12,7 @@ if [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
 elif [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-exit 1 
+exit 1
 fi
 
 
@@ -29,7 +29,7 @@ do
         docker-compose logs --tail="100"
         exit 1
     fi
-    #looks for unhealthy|starting containers     
+    #looks for unhealthy|starting containers
     if printf '%s\n' "${CONT_STATUS[@]}" | grep -q 'starting'; then
         echo "Waiting for containers to start..."
         STARTING_CONT=$(echo "$CONT_STATUS" |  sed -e 's/Up.* (/: /g' -e 's/)//g' | grep starting)
@@ -58,14 +58,14 @@ do
         fi
     else
         echo "$CONT_STATUS"
-        exit 0    
+        exit 0
     fi
 
-    sleep 20
+    sleep 60
 
     #exit with error if time greater than allowed
     if [[ $SECONDS -ge $SECONDSLIMIT ]]; then
     exit 1
     fi
- 
+
 done

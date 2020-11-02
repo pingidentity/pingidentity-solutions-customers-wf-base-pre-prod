@@ -27,9 +27,6 @@ services:
   pingfederate:
     image: pingidentity/pingfederate:latest
     command: wait-for pingdirectory:389 -t 600 -- entrypoint.sh start-server
-    #environment:
-      #- SERVER_PROFILE_URL=https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/pingidentity/ping-celero
-      #- SERVER_PROFILE_PATH=workforce360/server-profile/pingfederate
     env_file:
       - ${HOME}/.pingidentity/devops
     ports:
@@ -43,9 +40,8 @@ services:
 
   pingdirectory:
     image: pingidentity/pingdirectory:latest
-    #environment:
-      #- SERVER_PROFILE_URL=https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/pingidentity/ping-celero
-      #- SERVER_PROFILE_PATH=workforce360/server-profile/pingdirectory
+    environment:
+      - MAX_HEAP_SIZE=768m
     env_file:
       - ${HOME}/.pingidentity/devops
     ulimits:
@@ -55,6 +51,7 @@ services:
       nofile:
         soft: 65535
         hard: 65535
+    tmpfs: /run/secrets
     ports:
       - "1636:636"
       - "1443:443"
