@@ -23,7 +23,7 @@ sed "s/<git_user>/$GITLAB_USER/;\
   .gitlab-ci/env-template-dev.txt >.env
 fi
 
-docker-compose --verbose up \
+docker-compose up \
   --detach \
   --remove-orphans \
   --timeout 30 \

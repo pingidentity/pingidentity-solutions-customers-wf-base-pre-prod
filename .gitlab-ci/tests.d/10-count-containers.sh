@@ -2,7 +2,7 @@
 
 # Verify all 6 containers run from startup
 CONTAINERCOUNT=$(docker ps -q $1 -f status=running | wc -l)
-CONTAINERSEXPECTED=6
+CONTAINERSEXPECTED=7
 SECONDS=0
 SECONDSMAX=3000
 SECONDSLIMIT=$(($SECONDSMAX+25))
@@ -61,7 +61,7 @@ do
         exit 0
     fi
 
-    sleep 60
+    sleep 90
 
     #exit with error if time greater than allowed
     if [[ $SECONDS -ge $SECONDSLIMIT ]]; then
