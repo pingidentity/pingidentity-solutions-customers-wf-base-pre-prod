@@ -1,5 +1,6 @@
 #!/bin/bash
-#set -xeo pipefail
+# Sets variables along with starting solution
+
 set +x
 set -eo pipefail
 

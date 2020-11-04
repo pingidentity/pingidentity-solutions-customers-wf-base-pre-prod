@@ -15,8 +15,8 @@ default:
   image: "pingdevops.com/ci-utils/docker-builds-runner:edb6f37cedb342138aca215a69474e679b55390d5150ce8400eac264f2a864ae"
   services:
     - name: "docker:18.09-dind"
-  tags:
-    - k8s
+  # tags:
+  #  - k8s
 
 variables:
   DOCKER_HOST: "tcp://localhost:2375"

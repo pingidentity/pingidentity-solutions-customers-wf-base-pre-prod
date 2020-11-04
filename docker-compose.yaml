@@ -1,8 +1,8 @@
 version: "2.4"
 #-------------------------------------------------------------------------------------------------------------------------------
-#- Ping Identity Workforce360 integrated demo
+#- Ping Identity Workforce360
 #-
-#-     login  console            app                  app                console           rest    ldaps            login
+#-    login console              app                  app                console           rest   ldaps             login
 #-     9031   9999               9022                 6443                 8443            1443    1636              8443
 #-      |      |                  |                    |                    |               |       |                 |
 #-   +---------------+    +---------------+    +---------------+    +---------------+    +---------------+    +---------------+

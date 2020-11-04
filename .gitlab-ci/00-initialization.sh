@@ -1,4 +1,6 @@
 #!/bin/bash
+# Script to verify features and types
+
 set -xeo pipefail
 
 pwd

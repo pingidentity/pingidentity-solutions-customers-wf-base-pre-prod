@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script checks server profile directories are present and contain content
 
 set +x
 set -eo pipefail
@@ -17,6 +18,7 @@ declare -a server_profiles=($PINGCENTRALDIR
                             $PINGFEDERATEDIR
                             )
 
+# Verifies directories contain content
 for server_profile in "${server_profiles[@]}"
 do
     if [ -z "$(ls -A $server_profile)" ]; then
@@ -27,14 +29,23 @@ do
     fi
 done
 
-
+# Verifies adapters are included in solution
 ADAPTERCOUNT=$(ls -1 server-profile/pingfederate/instance/server/default/deploy | wc -l)
 
-if [ $ADAPTERCOUNT != "36" ]; then
-    echo "Not all adapters present, please add required adapters into PingFederate server profile!"
-    exit 1
-else
+if [ $ADAPTERCOUNT -ge "36" ]; then
     echo "Necessary adapters are included in PingFederate server profile..."
+else
+    echo "Necessary adapters are NOT included in PingFederate server profile!"
+    exit 1
 fi
 
-exit
+# Verifies that adapter info for end-users are present in assets folder
+CONNECTORINFOCOUNT=$(ls -1 ./assets | wc -l)
+
+if [ $CONNECTORINFOCOUNT -gt "0" ]; then
+    echo "Adapter information is included in solution..."
+    exit 0
+else
+    echo "Adapter information is NOT included in solution!"
+    exit 1
+fi

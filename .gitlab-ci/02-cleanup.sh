@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-#
 # Ping Identity DevOps - CI scripts
-# This script will cleanup a docker environment
+# Cleanup a docker environment
 
 test -n "${VERBOSE}" && set -x
 

@@ -1,4 +1,6 @@
 #!/bin/bash
+# Pushes GitLab repository to public-facing GitHub (main branch) repository
+
 set -euo pipefail
 
 git remote add gh_location "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-c360.git"
