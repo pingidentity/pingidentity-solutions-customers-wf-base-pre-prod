@@ -63,80 +63,80 @@ services:
       - ./server-profile/pingdirectory:/opt/in
       - pingdirectory-out:/opt/out
 
-  pingdataconsole:
-    image: pingidentity/pingdataconsole:latest
-    ports:
-      - "8443:8443"
-    networks:
-      - pingnet
+  # pingdataconsole:
+  #   image: pingidentity/pingdataconsole:latest
+  #   ports:
+  #     - "8443:8443"
+  #   networks:
+  #     - pingnet
 
-  pingcentral:
-    image: pingidentity/pingcentral:edge
-    command: wait-for pingcentral-db:3306 -t 7200 -- entrypoint.sh start-server
-    environment:
-      - PING_CENTRAL_BLIND_TRUST=true
-      - PING_CENTRAL_LOG_LEVEL=DEBUG
-      - PING_CENTRAL_VERIFY_HOSTNAME=false
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=2Federate
-    env_file:
-      - ${HOME}/.pingidentity/devops
-    volumes:
-      - ./server-profile/pingcentral/pingcentral.jwk:/opt/in/instance/conf/pingcentral.jwk
-      - ./server-profile/pingcentral/external-mysql-db/instance:/opt/in/instance
-      - ./server-profile/pingcentral:/opt/in
-      - pingcentral-out:/opt/out
-    ports:
-      - "9022:9022"
-    depends_on:
-      - "pingcentral-db"
-    networks:
-      - pingnet
+  # pingcentral:
+  #   image: pingidentity/pingcentral:edge
+  #   command: wait-for pingcentral-db:3306 -t 7200 -- entrypoint.sh start-server
+  #   environment:
+  #     - PING_CENTRAL_BLIND_TRUST=true
+  #     - PING_CENTRAL_LOG_LEVEL=DEBUG
+  #     - PING_CENTRAL_VERIFY_HOSTNAME=false
+  #     - MYSQL_USER=root
+  #     - MYSQL_PASSWORD=2Federate
+  #   env_file:
+  #     - ${HOME}/.pingidentity/devops
+  #   volumes:
+  #     - ./server-profile/pingcentral/pingcentral.jwk:/opt/in/instance/conf/pingcentral.jwk
+  #     - ./server-profile/pingcentral/external-mysql-db/instance:/opt/in/instance
+  #     - ./server-profile/pingcentral:/opt/in
+  #     - pingcentral-out:/opt/out
+  #   ports:
+  #     - "9022:9022"
+  #   depends_on:
+  #     - "pingcentral-db"
+  #   networks:
+  #     - pingnet
 
-  pingcentral-db:
-   image: mysql
-   command: --default-authentication-plugin=mysql_native_password
-   environment:
-     MYSQL_ROOT_PASSWORD: 2Federate
-   volumes:
-     - ./conf/mysql/data:/var/lib/mysql
-   ports:
-     - "3306:3306"
-   networks:
-     - pingnet
+  # pingcentral-db:
+  #  image: mysql
+  #  command: --default-authentication-plugin=mysql_native_password
+  #  environment:
+  #    MYSQL_ROOT_PASSWORD: 2Federate
+  #  volumes:
+  #    - ./conf/mysql/data:/var/lib/mysql
+  #  ports:
+  #    - "3306:3306"
+  #  networks:
+  #    - pingnet
 
-  pingdatasync:
-    image: pingidentity/pingdatasync:latest
-    environment:
-      - USER_BASE_DN=dc=example,dc=com
-    env_file:
-      - ${HOME}/.pingidentity/devops
-    ulimits:
-      nproc:
-        soft: 16384
-        hard: 16384
-      nofile:
-        soft: 65535
-        hard: 65535
-    ports:
-      - "2636:636"
-      - "2443:443"
-    networks:
-      - pingnet
-    volumes:
-      - ./server-profile/pingdatasync:/opt/in
-      - pingdatasync-out:/opt/out
+  # pingdatasync:
+  #   image: pingidentity/pingdatasync:latest
+  #   environment:
+  #     - USER_BASE_DN=dc=example,dc=com
+  #   env_file:
+  #     - ${HOME}/.pingidentity/devops
+  #   ulimits:
+  #     nproc:
+  #       soft: 16384
+  #       hard: 16384
+  #     nofile:
+  #       soft: 65535
+  #       hard: 65535
+  #   ports:
+  #     - "2636:636"
+  #     - "2443:443"
+  #   networks:
+  #     - pingnet
+  #   volumes:
+  #     - ./server-profile/pingdatasync:/opt/in
+  #     - pingdatasync-out:/opt/out
 
-  pingdelegator:
-    image: pingidentity/pingdelegator:latest
-    environment:
-      - PD_ENGINE_PUBLIC_PORT=1443
-    env_file:
-      - ${HOME}/.pingidentity/devops
-    ports:
-      - "6443:6443"
-    networks:
-      - pingnet
+  # pingdelegator:
+  #   image: pingidentity/pingdelegator:latest
+  #   environment:
+  #     - PD_ENGINE_PUBLIC_PORT=1443
+  #   env_file:
+  #     - ${HOME}/.pingidentity/devops
+  #   ports:
+  #     - "6443:6443"
+  #   networks:
+  #     - pingnet
 
 networks:
     pingnet:
@@ -144,5 +144,5 @@ networks:
 volumes:
   pingfederate-out:
   pingdirectory-out:
-  pingcentral-out:
-  pingdatasync-out:
+  # pingcentral-out:
+  # pingdatasync-out:
