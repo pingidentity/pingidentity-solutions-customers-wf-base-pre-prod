@@ -3,24 +3,31 @@
 
 set -euo pipefail
 
-GITHUBLOCATION=$(git remote -v)
-GITHUBLOCATIONCHECK=$(echo "$GITHUBLOCATION" | awk '/github_location/ && /push/')
-if [[ "$GITHUBLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]]; then
-    echo "GitHub remote location already exists!"
-    GITREMOTENAME=$(echo $GITHUBLOCATIONCHECK | awk '{print $1}')
+GITLOCATION=$(git remote -v)
+GITLOCATIONCHECK=$(echo "$GITLOCATION" | awk '/location/ && /push/')
+if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]]; then
+    echo "Git remote location already exists!"
+    GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     echo "$GITREMOTENAME found... Using this to push to GitHub..."
-    #git push "$GITREMOTENAME" HEAD:main
+    git push "$GITREMOTENAME" HEAD:main
 else
-    echo "Adding GitHub remote location..."
-    echo $GITHUBLOCATION
-#    GITREMOTENAME="gh_location"
-#     git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
-#     git push "$GITREMOTENAME" HEAD:main
+    echo "Adding Git remote location..."
+    GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
+    if [[ "$GITREMOTENAME" == "gh_location" ]]; then
+        echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
+        git remote rm "$GITREMOTENAME"
+        GITREMOTENAME="gh_location"
+        git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+    fi
+
+    git push "$GITREMOTENAME" HEAD:main
+
 fi
 
-# if test -n "$CI_COMMIT_TAG"
-# then
-#     git push "$GITREMOTENAME" "$CI_COMMIT_TAG"
-#fi
+if test -n "$CI_COMMIT_TAG"
+then
+    echo "using $GITREMOTENAME..."
+    git push "$GITREMOTENAME" "$CI_COMMIT_TAG"
+fi
 
 exit 0
