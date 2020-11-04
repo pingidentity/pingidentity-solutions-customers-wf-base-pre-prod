@@ -61,7 +61,8 @@ do
         exit 0
     fi
 
-    sleep 90
+    free -m
+    sleep 30
 
     #exit with error if time greater than allowed
     if [[ $SECONDS -ge $SECONDSLIMIT ]]; then
