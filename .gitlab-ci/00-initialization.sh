@@ -1,4 +1,6 @@
 #!/bin/bash
+# Script to verify features and types
+
 set -xeo pipefail
 
 pwd
@@ -13,10 +15,6 @@ type envsubst
 envsubst --version
 type git
 git --version
-#type mdl
-#mdl --version
-# type shellcheck
-# shellcheck --version
 type sed
 sed --version
 exit 0
