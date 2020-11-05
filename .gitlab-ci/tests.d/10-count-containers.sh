@@ -26,6 +26,7 @@ do
     if [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
         #if there's less containers (i.e. directory dies), print the docker logs and exit 1.
         echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
+	echo "$CONT_STATUS"
         docker-compose logs --tail="100"
         exit 1
     fi
@@ -49,11 +50,13 @@ do
         if echo $UNHEALTHY_CONT | grep -q 'pingfederate' && (( $PINGFED_COUNT+60 <= $SECONDS )); then
             echo $UNHEALTHY_CONT | sed -e 's/Up.*unhealthy)/Error: is unhealthy. /'
             docker-compose logs --tail="100"
+            echo "$CONT_STATUS"
             exit 1
         #if pingfederate not in there anymore and something is unhealthy then exit 1
         elif echo $UNHEALTHY_CONT | grep -qv 'pingfederate'; then
             echo $UNHEALTHY_CONT | sed -e 's/Up.*unhealthy)/Error: is unhealthy. /'
             docker-compose logs --tail="100"
+            echo "$CONT_STATUS"
             exit 1
         fi
     else
