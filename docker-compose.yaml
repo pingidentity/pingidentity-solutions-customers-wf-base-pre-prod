@@ -99,7 +99,8 @@ services:
    environment:
      MYSQL_ROOT_PASSWORD: 2Federate
    volumes:
-     - ./conf/mysql/data:/var/lib/mysql
+#     - ./conf/mysql/data:/var/lib/mysql
+      - ./conf/mysql:/docker-entrypoint-initdb.d
    ports:
      - "3306:3306"
    networks:
