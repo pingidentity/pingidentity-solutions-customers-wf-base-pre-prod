@@ -24,6 +24,9 @@ sed "s/<git_user>/$GITLAB_USER/;\
   .gitlab-ci/env-template-dev.txt >.env
 fi
 
+#log into pdsolutions docker account
+cat docker/pdsolutions | docker login --username pdsolutions --password-stdin
+
 docker-compose up \
   --detach \
   --remove-orphans \
