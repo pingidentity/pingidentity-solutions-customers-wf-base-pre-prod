@@ -9,7 +9,7 @@ if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]]; then
     echo "Git remote location already exists!"
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     echo "$GITREMOTENAME found... Using this to push to GitHub..."
-    git pull "$GITREMOTENAME"
+    git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     git push "$GITREMOTENAME" HEAD:main
 else
     echo "Adding Git remote location..."
@@ -19,7 +19,7 @@ else
         git remote rm "$GITREMOTENAME"
         GITREMOTENAME="gh_location"
         git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
-        git pull "$GITREMOTENAME"
+        git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     fi
     git push "$GITREMOTENAME" HEAD:main
 
