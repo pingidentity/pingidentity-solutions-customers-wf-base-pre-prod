@@ -9,7 +9,7 @@ if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]]; then
     echo "Git remote location already exists!"
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     echo "$GITREMOTENAME found... Using this to push to GitHub..."
-    git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+    git pull "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git" "$GITREMOTENAME"
     git push "$GITREMOTENAME" HEAD:main
 else
     echo "Adding Git remote location..."
@@ -20,14 +20,14 @@ else
         GITREMOTENAME="gh_location"
         git remote set-url "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     fi
-    git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+    git pull "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git" "$GITREMOTENAME"
     git push "$GITREMOTENAME" HEAD:main
 fi
 
 if test -n "$CI_COMMIT_TAG"
 then
     echo "using $GITREMOTENAME..."
-    git pull "$GITREMOTENAME"
+    git pull "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git" "$GITREMOTENAME"
     git push "$GITREMOTENAME" "$CI_COMMIT_TAG"
 fi
 
