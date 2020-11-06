@@ -18,11 +18,10 @@ else
         echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
         git remote rm "$GITREMOTENAME"
         GITREMOTENAME="gh_location"
-        git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
-        git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+        git remote set-url "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     fi
+    git pull "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     git push "$GITREMOTENAME" HEAD:main
-
 fi
 
 if test -n "$CI_COMMIT_TAG"
