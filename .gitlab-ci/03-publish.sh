@@ -19,7 +19,8 @@ else
         GITREMOTENAME="gh_location"
         git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
     fi
-
+    echo $GITREMOTENAME
+    echo $GITLOCATIONCHECK
     git push "$GITREMOTENAME" HEAD:main
 
 fi
