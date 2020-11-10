@@ -73,10 +73,7 @@ services:
 
   pingcentral:
     image: pingidentity/pingcentral:edge
-    #command: >
     command: /tmp/pingcentral_db/pingcentral_standup.sh
-    #  wait-for pingcentral-db:3306 -t 7200 -- entrypoint.sh start-server;
-    #  sh -c "/tmp/pingcentral_db/pwd_sub.sh"
     environment:
       - PING_CENTRAL_BLIND_TRUST=true
       - PING_CENTRAL_LOG_LEVEL=DEBUG
@@ -90,9 +87,6 @@ services:
       - ./server-profile/pingcentral:/opt/in
       - pingcentral-out:/opt/out
       - ./server-profile/pingcentral_db:/tmp/pingcentral_db
-      #- type: bind
-      #  source: ./persist/pingcentral/conf/pingcentral.jwk
-      #  target: /opt/out/instance/conf/pingcentral.jwk
     ports:
       - "9022:9022"
     depends_on:
@@ -108,7 +102,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 2Federate
     volumes:
-      #- ./persist/mysql/data:/var/lib/mysql
       - pingcentral_db-out:/var/lib/mysql
     ports:
       - "3306:3306"
