@@ -70,9 +70,13 @@ services:
     networks:
       - pingnet
 
+
   pingcentral:
     image: pingidentity/pingcentral:edge
-    command: wait-for pingcentral-db:3306 -t 7200 -- entrypoint.sh start-server
+    #command: >
+    command: /tmp/pingcentral_db/pingcentral_standup.sh
+    #  wait-for pingcentral-db:3306 -t 7200 -- entrypoint.sh start-server;
+    #  sh -c "/tmp/pingcentral_db/pwd_sub.sh"
     environment:
       - PING_CENTRAL_BLIND_TRUST=true
       - PING_CENTRAL_LOG_LEVEL=DEBUG
@@ -82,10 +86,13 @@ services:
     env_file:
       - ${HOME}/.pingidentity/devops
     volumes:
-      - ./server-profile/pingcentral/pingcentral.jwk:/opt/in/instance/conf/pingcentral.jwk
       - ./server-profile/pingcentral/external-mysql-db/instance:/opt/in/instance
       - ./server-profile/pingcentral:/opt/in
       - pingcentral-out:/opt/out
+      - ./server-profile/pingcentral_db:/tmp/pingcentral_db
+      #- type: bind
+      #  source: ./persist/pingcentral/conf/pingcentral.jwk
+      #  target: /opt/out/instance/conf/pingcentral.jwk
     ports:
       - "9022:9022"
     depends_on:
@@ -94,18 +101,37 @@ services:
       - pingnet
 
   pingcentral-db:
-   image: mysql
-   command: --default-authentication-plugin=mysql_native_password
-   environment:
-     MYSQL_ROOT_PASSWORD: 2Federate
-   volumes:
-#     - ./conf/mysql/data:/var/lib/mysql
-      - ./conf/mysql:/docker-entrypoint-initdb.d
-   ports:
-     - "3306:3306"
-   networks:
-     - pingnet
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 2Federate
+    volumes:
+      #- ./persist/mysql/data:/var/lib/mysql
+      - pingcentral_db-out:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - pingnet
 
+  pingcentral-db-loader:
+    image: mysql
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mysql -hpingcentral-db -uroot -p2Federate -Dpingcentral < /docker-entrypoint-initdb.d/env_conf.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 2Federate
+    volumes:
+      - ./server-profile/pingcentral_db/env_conf.sql:/docker-entrypoint-initdb.d/env_conf.sql
+    networks:
+      - pingnet
+    depends_on:
+      pingcentral:
+        condition: service_healthy
+    
   pingdatasync:
     image: pingidentity/pingdatasync:latest
     environment:
@@ -147,3 +173,4 @@ volumes:
   pingdirectory-out:
   pingcentral-out:
   pingdatasync-out:
+  pingcentral_db-out:
