@@ -2,7 +2,7 @@
 # Verify all 6 containers run from startup
 set -x
 
-CONTAINERCOUNT=$(docker ps -q $1 -f status=running | wc -l)
+CONTAINERCOUNT=$(docker ps -q $1 -f status=running | grep -v pingcentral-db-loader | wc -l)
 CONTAINERSEXPECTED=7
 SECONDS=0
 SECONDSMAX=3000
@@ -12,7 +12,7 @@ SECONDSLIMIT=$(($SECONDSMAX+25))
 
 if [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-elif [ $CONTAINERCOUNT -le $CONTAINERSEXPECTED ]; then
+elif [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
 docker ps --format '{{.Names}} {{.Status}}'
 exit 1
