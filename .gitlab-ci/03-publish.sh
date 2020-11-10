@@ -1,10 +1,11 @@
 #!/bin/bash
 # Pushes GitLab repository to public-facing GitHub (main branch) repository
 
+set -x
 set -euo pipefail
 
 GITLOCATION=$(git remote -v)
-GITLOCATIONCHECK=$(echo "$GITLOCATION" | awk '/location/ && /push/')
+GITLOCATIONCHECK=$(echo "$GITLOCATION" | awk '/fetch/ && /push/')
 if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]]; then
     echo "Git remote location already exists!"
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
@@ -14,12 +15,15 @@ else
     echo "Adding Git remote location..."
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     if [[ "$GITREMOTENAME" == "gh_location" ]]; then
-        echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
+        echo "Existing gh_location remote location found! Removing and adding proper git remote location..."
         git remote rm gh_location
         GITREMOTENAME="gh_location"
-        git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+        echo "$GITREMOTENAME"
+        git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
         git push "$GITREMOTENAME" HEAD:main
     else
+        echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
+        git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
         git push "$GITREMOTENAME" HEAD:main
     fi
 fi
