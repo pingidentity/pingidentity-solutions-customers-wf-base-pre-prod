@@ -22,6 +22,7 @@ else
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
         git push $GITREMOTENAME HEAD:main
     else
+        GITREMOTENAME="gh_location"
         echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
         git push $GITREMOTENAME HEAD:main
