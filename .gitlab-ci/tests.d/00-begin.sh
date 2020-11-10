@@ -40,6 +40,7 @@ else
 fi
 
 # Verifies that adapter info for end-users are present in assets folder
+
 CONNECTORINFOCOUNT=$(ls -1 ./assets | wc -l)
 
 if [ $CONNECTORINFOCOUNT -gt "0" ]; then
@@ -49,3 +50,20 @@ else
     echo "Adapter information is NOT included in solution!"
     exit 1
 fi
+
+#needed to support directory names with spaces
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+#get list of directories to check
+ADAPTER_ASSETS=$(ls -d ./assets/*/ | sed -e 's/.$//')
+#loop through and make sure content in each directory
+for ADAPTER in $ADAPTER_ASSETS;do
+if [ ! "$(ls -A $ADAPTER)" ]; then
+        echo "$ADAPTER is empty!" | sed 's@./assets/@@g'
+        exit 1
+else
+echo "$ADAPTER contains content" | sed 's@./assets/@@g'
+fi
+done
+#set IFS back to OG value.
+IFS=$SAVEIFS
