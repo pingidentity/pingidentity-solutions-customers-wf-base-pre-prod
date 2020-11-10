@@ -70,7 +70,6 @@ services:
     networks:
       - pingnet
 
-
   pingcentral:
     image: pingidentity/pingcentral:edge
     command: /tmp/pingcentral_db/pingcentral_standup.sh

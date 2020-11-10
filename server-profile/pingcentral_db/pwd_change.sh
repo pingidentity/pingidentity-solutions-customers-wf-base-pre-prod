@@ -5,7 +5,6 @@ do
       sleep 2
 done
 
-
 #get encrypted value for instance
 PWD_VAL=$(/opt/out/instance/bin/obfuscate.sh 2FederateM0re | tr '\n' ' ' | sed -e 's/.*OBF:JWE://' -e 's/ *$//')
 
