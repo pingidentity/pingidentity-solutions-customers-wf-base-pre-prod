@@ -12,7 +12,7 @@ SECONDSLIMIT=$(($SECONDSMAX+25))
 
 if [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-elif [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
+elif [ $CONTAINERCOUNT -le $CONTAINERSEXPECTED ]; then
 echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
 docker ps --format '{{.Names}} {{.Status}}'
 exit 1
