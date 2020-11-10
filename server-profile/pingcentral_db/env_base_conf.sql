@@ -1,0 +1,1 @@
+INSERT IGNORE INTO pingcentral.environment VALUES ('83440a7a-3e7d-4609-a100-3e4dafd84822','PingFederate Connection',NULL,'PingCentral to PingFed','pingfederate',9999,'Administrator','PWD_VAL',_binary '\0',_binary '\0',NULL,NULL,NULL,'10.2.1.0',_binary '\0',NULL,0,NULL,NULL,_binary '',NULL);

@@ -34,4 +34,7 @@ then
     docker system prune -af
 fi
 
+# log out of docker account
+docker logout
+
 exit 0
