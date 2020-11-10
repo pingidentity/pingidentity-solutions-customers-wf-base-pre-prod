@@ -1,7 +1,6 @@
 #!/bin/bash
 # Pushes GitLab repository to public-facing GitHub (main branch) repository
-​
-set -euo pipefail
+​set -euo pipefail
 ​
 git config --global user.email 'pd-solutions@pingidentity.com'
 git config --global user.name 'PingIdentity Solutions'
