@@ -25,7 +25,7 @@ while [ $SECONDS -le $SECONDSLIMIT ]
 do
     CONT_STATUS=$(docker ps --format '{{.Names}} {{.Status}}')
     #check that we still have $CONTAINERSEXPECTED num of containers. error if we don't.
-    CONTAINERCOUNT=$(echo "$CONT_STATUS" | wc -l)
+    CONTAINERCOUNT=$(echo "$CONT_STATUS" | grep -v pingcentral-db-loader | wc -l)
     if [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
         #if there's less containers (i.e. directory dies), print the docker logs and exit 1.
         echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
