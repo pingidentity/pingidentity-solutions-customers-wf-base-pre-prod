@@ -2,7 +2,6 @@
 # Pushes GitLab repository to public-facing GitHub (main branch) repository
 
 set -x
-set -euo pipefail
 
 GITLOCATION=$(git remote -v)
 GITLOCATIONCHECK=$(echo "$GITLOCATION" | awk '/fetch/ && /push/')

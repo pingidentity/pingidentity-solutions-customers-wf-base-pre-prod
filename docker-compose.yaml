@@ -124,7 +124,7 @@ services:
     depends_on:
       pingcentral:
         condition: service_healthy
-    
+
   pingdatasync:
     image: pingidentity/pingdatasync:latest
     environment:

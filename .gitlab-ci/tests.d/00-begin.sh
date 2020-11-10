@@ -2,7 +2,6 @@
 # Script checks server profile directories are present and contain content
 
 set +x
-set -eo pipefail
 
 # Verify if server profile directories exist
 PINGCENTRALDIR="./server-profile/pingcentral"
@@ -22,10 +21,10 @@ declare -a server_profiles=($PINGCENTRALDIR
 for server_profile in "${server_profiles[@]}"
 do
     if [ -z "$(ls -A $server_profile)" ]; then
-        echo "$server_profile does not exist or does not contain any content" | sed -e 's@./server-profile/@@'
+        echo "$server_profile does not exist or does not contain any content!" | sed -e 's@./server-profile/@@'
         exit 1
     else
-        echo "$server_profile directory does exist and contains content" | sed -e 's@./server-profile/@@'
+        echo "$server_profile directory does exist and contains content..." | sed -e 's@./server-profile/@@'
     fi
 done
 
@@ -40,7 +39,6 @@ else
 fi
 
 # Verifies that adapter info for end-users are present in assets folder
-
 CONNECTORINFOCOUNT=$(ls -1 ./assets | wc -l)
 
 if [ $CONNECTORINFOCOUNT -gt "0" ]; then

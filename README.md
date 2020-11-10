@@ -11,18 +11,12 @@ Below are steps on how to deploy the solution along with testing a couple of fea
    > For your initial deployment of the stack, we recommend you make no changes to the `docker-compose.yaml` file to ensure you have a successful first-time deployment.
 
    a. To start the stack, go to your local `workforce360` directory and enter:
-
-   ```shell
-   docker-compose up -d
-   ```
+      docker-compose up -d
 
    The full set of our DevOps images is automatically pulled from our repository, if you haven't already pulled the images from [Docker Hub](https://hub.docker.com/u/pingidentity/).
 
    b. Use this command to display the logs as the stack starts:
-
-   ```shell
-   docker-compose logs -f
-   ```
+      docker-compose logs -f
 
    Enter `Ctrl+C` to exit the display.
 
@@ -32,6 +26,7 @@ Below are steps on how to deploy the solution along with testing a couple of fea
    * `watch "docker container ls --format 'table {{.Names}}\t{{.Status}}'"`
 
    Refer to the [Docker Compose documentation](https://docs.docker.com/compose/) for more information.
+   Refer to the [Devops GitBook](https://pingidentity-devops.gitbook.io/devops/) for more information on using Ping Identity DevOps.
 
 2. Log in to the management consoles for the products:
 
@@ -74,7 +69,7 @@ Below are steps on how to deploy the solution along with testing a couple of fea
 
 4. How to test OAuth with a Sample User:
     - Navigate to this URL (use localhost unless otherwise specified)
-      => <hostname>:9031/OAuthPlayground
+      => https://localhost:9031/OAuthPlayground
     - Select the "Submit" button at the bottom of the screen
     - You will then be redirected to a Sign On screen
     - Next, enter in a sample username, followed by the sample password. The sample users file can be found (the location below) within the PingDirectory Server Profile.
@@ -82,22 +77,22 @@ Below are steps on how to deploy the solution along with testing a couple of fea
     - You will then be redirected back to a similar screen. From here, click the "Submit" button once more.
     - Step 3: TOKEN ENDPOINT page will then be presented. If the OAuth request and response was valid, you will see a "Parsed Response" of "HTTP Status: 200 OK" on the top right of your screen.
 
-5. When you no longer want to run the solution, you can either stop or remove the stack.
+5. How to view your sample users in PingDelegator
+    - Navigate to this URL (use localhost unless otherwise specified)
+      => https://localhost:6443
+    - Login using Administrator account:
+      => Username: Administrator
+      => Password: 2FederateM0re
+    - You will then be brought to a "Search Users" page
+    - To view all users, click inside the "Search Users by..." text box
+    - Hit the return (or Enter) key to display all users from PingDirectory
 
-   To stop the running stack (doesn't remove any of the containers or associated Docker networks), enter:
+6. When you no longer want to run the solution, you can either stop or remove the stack.
+    - To stop the running stack (doesn't remove any of the containers or associated Docker networks), enter:
+      docker-compose stop
 
-   ```bash
-   docker-compose stop
-   ```
+    - To stop the stack and remove all of the containers and associated Docker networks, enter:
+      docker-compose down
 
-   To stop the stack and remove all of the containers and associated Docker networks, enter:
-
-   ```bash
-   docker-compose down
-   ```
-
-   To remove the persisted volumes (removing any configuration changes you may have done)
-
-   ```bash
-   docker volume prune
-   ```
+    - To remove the persisted volumes (removing any configuration changes you may have done)
+      docker volume prune
