@@ -2,7 +2,7 @@
 # Verify all 6 containers run from startup
 set -x
 
-CONTAINERCOUNT=$(docker ps -q $1 -f status=running | grep -v pingcentral-db-loader | wc -l)
+CONTAINERCOUNT=$(docker ps --format '{{.Names}}' -f status=running | grep -v pingcentral-db-loader | wc -l)
 CONTAINERSEXPECTED=7
 SECONDS=0
 SECONDSMAX=3000
@@ -10,13 +10,13 @@ SECONDSLIMIT=$(($SECONDSMAX+25))
 
 
 
-#if [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
-#echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-#elif [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
-#echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-#docker ps --format '{{.Names}} {{.Status}}'
-#exit 1
-#fi
+if [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
+echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
+elif [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
+echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
+docker ps --format '{{.Names}} {{.Status}}'
+exit 1
+fi
 
 
 #CONTAINER_STATUS=$(docker ps --format '{{.Names}} {{.Status}}' | sed -e 's/Up.* (/: /g' -e 's/)//g' | grep starting)
@@ -25,14 +25,14 @@ while [ $SECONDS -le $SECONDSLIMIT ]
 do
     CONT_STATUS=$(docker ps --format '{{.Names}} {{.Status}}')
     #check that we still have $CONTAINERSEXPECTED num of containers. error if we don't.
-    #CONTAINERCOUNT=$(echo "$CONT_STATUS" | grep -v pingcentral-db-loader | wc -l)
-    #if [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
+    CONTAINERCOUNT=$(echo "$CONT_STATUS" | grep -v pingcentral-db-loader | wc -l)
+    if [ $CONTAINERCOUNT -ne $CONTAINERSEXPECTED ]; then
         #if there's less containers (i.e. directory dies), print the docker logs and exit 1.
-    #    echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
-    #echo "$CONT_STATUS"
-    #    docker-compose logs --tail="100"
-    #    exit 1
-    #fi
+        echo "$CONTAINERSEXPECTED containers expected. $CONTAINERCOUNT containers found..."
+    echo "$CONT_STATUS"
+        docker-compose logs --tail="100"
+        exit 1
+    fi
     #looks for unhealthy|starting containers
     STARTING_CONT=$(printf '%s\n' "${CONT_STATUS[@]}" | awk '/unhealthy|starting/')
     if echo "$STARTING_CONT" ; then
