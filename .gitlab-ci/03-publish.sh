@@ -20,16 +20,16 @@ else
         GITREMOTENAME="gh_location"
         echo "$GITREMOTENAME"
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
-        git push "$GITREMOTENAME" HEAD:main
+        git push $GITREMOTENAME HEAD:main
     else
         echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
-        git remote add "$GITREMOTENAME" "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
-        git push "$GITREMOTENAME" HEAD:main
+        git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-wf360.git"
+        git push $GITREMOTENAME HEAD:main
     fi
 fi
 
 if test -n "$CI_COMMIT_TAG"
 then
     echo "using $GITREMOTENAME..."
-    git push "$GITREMOTENAME" "$CI_COMMIT_TAG"
+    git push $GITREMOTENAME $CI_COMMIT_TAG
 fi
