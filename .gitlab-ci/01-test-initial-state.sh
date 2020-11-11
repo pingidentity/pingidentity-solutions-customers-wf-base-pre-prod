@@ -25,7 +25,7 @@ sed "s/<git_user>/$GITLAB_USER/;\
 fi
 
 #log into pdsolutions docker account
-docker login --username pdsolutions --password DOCKER_CRED
+docker login --username pdsolutions --password $DOCKER_CRED
 
 docker-compose up \
   --detach \
