@@ -1,0 +1,51 @@
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "web"
+
+stages:
+  - 00-initialization
+  - 01-test-solution
+  - 02-cleanup
+  - 03-publish
+
+default:
+  image: "pingdevops.com/ci-utils/docker-builds-runner:edb6f37cedb342138aca215a69474e679b55390d5150ce8400eac264f2a864ae"
+  services:
+    - name: "docker:18.09-dind"
+  tags:
+    - k8s
+
+variables:
+  DOCKER_HOST: "tcp://localhost:2375"
+  DOCKER_API_VERSION: "1.39"
+  KUBERNETES_CPU_REQUEST: "1250m"
+  KUBERNETES_CPU_LIMIT: "2000m"
+  KUBERNETES_MEMORY_REQUEST: "2555Mi"
+  KUBERNETES_MEMORY_LIMIT: "2555Mi"
+  KUBERNETES_POLL_TIMEOUT: 600
+
+initialization:
+  stage: 00-initialization
+  script:
+    - "./.gitlab-ci/00-initialization.sh"
+
+test-solution:
+    stage: 01-test-solution
+    script:
+      - "./.gitlab-ci/01-test-initial-state.sh"
+
+cleanup:
+  stage: 02-cleanup
+  when: always
+  script:
+    - "./.gitlab-ci/02-cleanup.sh"
+
+publish:
+  stage: 03-publish
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^\d+\.\d+\-\d{8}\-\d{2}$/
+  script:
+    - "./.gitlab-ci/03-publish.sh"

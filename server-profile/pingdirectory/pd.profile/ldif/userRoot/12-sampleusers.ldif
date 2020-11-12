@@ -1,0 +1,279 @@
+dn: uid=wcarver,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Carver
+cn: Will Carver
+givenName: Will
+uid: wcarver
+mail: wcarver@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=wcarver
+
+dn: uid=oroth,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Roth
+cn: Owain Roth
+givenName: Owain
+uid: oroth
+mail: oroth@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=oroth
+
+dn: uid=wmorrison,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Morrison
+cn: Wanda Morrison
+givenName: Wanda
+uid: wmorrison
+mail: wmorrison@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=wmorrison
+
+dn: uid=zalmond,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Almond
+cn: Zara Almond
+givenName: Zara
+uid: zalmond
+mail: zalmond@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=zalmond
+
+dn: uid=cdeacon,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Deacon
+cn: Caine Deacon
+givenName: Caine
+uid: cdeacon
+mail: cdeacon@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=cdeacon
+
+dn: uid=kriggs,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Riggs
+cn: Kacy Riggs
+givenName: Riggs
+uid: kriggs
+mail: kriggs@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=kriggs
+
+dn: uid=mhenry,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Henry
+cn: Mared Henry
+givenName: Mared
+uid: mhenry
+mail: mhenry@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=mhenry
+
+dn: uid=swicks,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Wicks
+cn: Sid Wicks
+givenName: Sid
+uid: swicks
+mail: swicks@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=swicks
+
+dn: uid=rcullen,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Cullen
+cn: Renae Cullen
+givenName: Renae
+uid: rcullen
+mail: rcullen@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=rcullen
+
+dn: uid=sredfern,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Redfern
+cn: Spike Redfern
+givenName: Spike
+uid: sredfern
+mail: sredfern@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=sredfern
+
+dn: uid=bneville,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Neville
+cn: Bronte Neville
+givenName: Bronte
+uid: bneville
+mail: bneville@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=bneville
+
+dn: uid=fweeks,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Weeks
+cn: Farhana Weeks
+givenName: Farhana
+uid: fweeks
+mail: fweeks@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=fweeks
+
+dn: uid=jfrye,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Frye
+cn: Jaidan Frye
+givenName: Jaidan
+uid: jfrye
+mail: jfrye@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=jfrye
+
+dn: uid=rbrooke,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Brooke
+cn: Raeann Brooke
+givenName: Raeann
+uid: rbrooke
+mail: rbrooke@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=rbrooke
+
+dn: uid=eseawell,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Seawell
+cn: Esko Seawell
+givenName: Esko
+uid: eseawell
+mail: eseawell@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=eseawell
+
+dn: uid=stancordo,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Tancordo
+cn: Sidonia Tancordo
+givenName: Sidonia
+uid: stancordo
+mail: stancordo@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=stancordo
+
+dn: uid=pmknio,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Knio
+cn: Pierre-Marc Knio
+givenName: Pierre-Marc
+uid: pmknio
+mail: pmknio@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=pmknio
+
+dn: uid=tpsutka,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Psutka
+cn: Terza Psutka
+givenName: Terza
+uid: tpsutka
+mail: tpsutka@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=tpsutka
+
+dn: uid=hbostock,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Bostock
+cn: Homer Bostock
+givenName: Homer
+uid: hbostock
+mail: hbostock@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=hbostock
+
+dn: uid=kbeasley,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Beasley
+cn: Kishan Beasley
+givenName: Kishan
+uid: kbeasley
+mail: kbeasley@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=kbeasley

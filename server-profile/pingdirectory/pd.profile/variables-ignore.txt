@@ -1,0 +1,5 @@
+# This file specifies the relative paths of any files that should not have
+# any variables substituted by the manage-profile tool.
+
+misc-files/README
+ldif/userRoot/11-autogen-users.ldif

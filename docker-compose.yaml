@@ -1,0 +1,168 @@
+version: "2.4"
+#-------------------------------------------------------------------------------------------------------------------------------
+#- Ping Identity Workforce360
+#-
+#-    login console              app                  app                console           rest   ldaps             login
+#-     9031   9999               9022                 6443                 8443            1443    1636              8443
+#-      |      |                  |                    |                    |               |       |                 |
+#-   +---------------+    +---------------+    +---------------+    +---------------+    +---------------+    +---------------+
+#-   | PingFederate  |    |  PingCentral  |    | PingDelegator |    |PingDataConsole|    | PingDirectory |    | PingDataSync  |
+#-   +---------------+    +---------------+    +---------------+    +---------------+    +---------------+    +---------------+
+#-
+#-   +-----------------------+--------------------------------------------------------+
+#-   |  Product Console/App  |  URL                                                   |
+#-   |                       |    username: administrator                             |
+#-   |                       |    password: 2FederateM0re                             |
+#-   +-----------------------+--------------------------------------------------------+
+#-   |  PingFederate         |  https://localhost:9999/pingfederate/app               |
+#-   |  PingDirectory        |  https://localhost:8443/   (Server=pingdirectory)      |
+#-   |  PingDataSync         |  https://localhost:8443/   (Server=pingdatasync)       |
+#-   |  PingDelegator        |  https://localhost:6443/   (Server=pingdelegator)      |
+#-   |  PingCentral          |  https://localhost:9022/   (Server=pingcentral)        |
+#-   |                       |    password: 2Federate                                 |
+#-   +-----------------------+--------------------------------------------------------+
+#-------------------------------------------------------------------------------------------------------------------------------
+
+services:
+  pingfederate:
+    image: pingidentity/pingfederate:latest
+    command: wait-for pingdirectory:389 -t 600 -- entrypoint.sh start-server
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ports:
+      - "9031:9031"
+      - "9999:9999"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingfederate:/opt/in
+      - pingfederate-out:/opt/out
+
+  pingdirectory:
+    image: pingidentity/pingdirectory:latest
+    environment:
+      - USER_BASE_DN=dc=example,dc=com
+      - MAX_HEAP_SIZE=768m
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ulimits:
+      nproc:
+        soft: 16384
+        hard: 16384
+      nofile:
+        soft: 65535
+        hard: 65535
+    tmpfs: /run/secrets
+    ports:
+      - "1636:636"
+      - "1443:443"
+      - "1389:389"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingdirectory:/opt/in
+      - pingdirectory-out:/opt/out
+
+  pingdataconsole:
+    image: pingidentity/pingdataconsole:latest
+    ports:
+      - "8443:8443"
+    networks:
+      - pingnet
+
+  pingcentral:
+    image: pingidentity/pingcentral:edge
+    command: /tmp/pingcentral_db/pingcentral_standup.sh
+    environment:
+      - PING_CENTRAL_BLIND_TRUST=true
+      - PING_CENTRAL_LOG_LEVEL=DEBUG
+      - PING_CENTRAL_VERIFY_HOSTNAME=false
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=2Federate
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    volumes:
+      - ./server-profile/pingcentral/external-mysql-db/instance:/opt/in/instance
+      - ./server-profile/pingcentral:/opt/in
+      - pingcentral-out:/opt/out
+      - ./server-profile/pingcentral_db:/tmp/pingcentral_db
+    ports:
+      - "9022:9022"
+    depends_on:
+      - "pingcentral-db"
+    networks:
+      - pingnet
+
+  pingcentral-db:
+    image: mysql
+    cap_add:
+      - SYS_NICE
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 2Federate
+    volumes:
+      - pingcentral_db-out:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - pingnet
+
+  pingcentral-db-loader:
+    image: mysql
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mysql -hpingcentral-db -uroot -p2Federate -Dpingcentral < /docker-entrypoint-initdb.d/env_conf.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 2Federate
+    volumes:
+      - ./server-profile/pingcentral_db/env_conf.sql:/docker-entrypoint-initdb.d/env_conf.sql
+    networks:
+      - pingnet
+    depends_on:
+      pingcentral:
+        condition: service_healthy
+
+  pingdatasync:
+    image: pingidentity/pingdatasync:latest
+    environment:
+      - USER_BASE_DN=dc=example,dc=com
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ulimits:
+      nproc:
+        soft: 16384
+        hard: 16384
+      nofile:
+        soft: 65535
+        hard: 65535
+    ports:
+      - "2636:636"
+      - "2443:443"
+    networks:
+      - pingnet
+    volumes:
+      - ./server-profile/pingdatasync:/opt/in
+      - pingdatasync-out:/opt/out
+
+  pingdelegator:
+    image: pingidentity/pingdelegator:latest
+    environment:
+      - PD_ENGINE_PUBLIC_PORT=1443
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ports:
+      - "6443:6443"
+    networks:
+      - pingnet
+
+networks:
+    pingnet:
+
+volumes:
+  pingfederate-out:
+  pingdirectory-out:
+  pingcentral-out:
+  pingdatasync-out:
+  pingcentral_db-out:

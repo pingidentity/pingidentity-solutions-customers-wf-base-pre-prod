@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+	entityID="https://your_vanity_url.zoom.us" cacheDuration="PT1440M"
+	ID="nYtE3pu8fofN4a5Z_ST5F8jDObh">
+	<md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+		<md:SingleLogoutService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+				Location="https://your_vanity_url.zoom.us/saml/SingleLogout"
+				ResponseLocation="https://your_vanity_url.zoom.us/saml/SingleLogout"/>
+		<md:SingleLogoutService
+				Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+				Location="https://your_vanity_url.zoom.us/saml/SingleLogout"
+				ResponseLocation="https://your_vanity_url.zoom.us/saml/SingleLogout"/>
+		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</md:NameIDFormat>
+		<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</md:NameIDFormat>
+		<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</md:NameIDFormat>
+		<md:AssertionConsumerService isDefault="true"
+			Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+			Location="https://your_vanity_url.zoom.us/saml/SSO"
+			index="0" />
+	</md:SPSSODescriptor>
+</md:EntityDescriptor>

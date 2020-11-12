@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+	entityID="https://slack.com/" cacheDuration="PT1440M"
+	ID="nYtE3pu8fofN4a5Z_ST5F8jDObh">
+	<md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+      <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+		<md:AssertionConsumerService isDefault="true"
+			Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+			Location="https://TEAM_NAME.slack.com/sso/saml"
+			index="0" />
+	</md:SPSSODescriptor>
+</md:EntityDescriptor>

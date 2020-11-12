@@ -1,0 +1,15 @@
+# To override the default server ports, copy this file to .env and edit the variables below.
+SOLUTIONS_C360_DG_PORT=7443
+SOLUTIONS_C360_PAP_PORT=8443
+SOLUTIONS_C360_CONSOLE_PORT=5443
+
+# See https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+# on how to generate a GitHub personal access token.
+SOLUTIONS_C360_GIT_USER=<git_user>
+SOLUTIONS_C360_GIT_TOKEN=<git_token>
+SOLUTIONS_C360_GIT_URL=gitlab.corp.pingidentity.com/solutions/customer360.git
+
+SOLUTIONS_C360_PROFILE_URL=https://${SOLUTIONS_C360_GIT_USER}:${SOLUTIONS_C360_GIT_TOKEN}@${SOLUTIONS_C360_GIT_URL}
+SOLUTIONS_C360_PROFILE_BRANCH=main
+SOLUTIONS_C360_DEVOPS_REGISTRY=docker.io/pingidentity
+SOLUTIONS_C360_DEVOPS_TAG=latest
