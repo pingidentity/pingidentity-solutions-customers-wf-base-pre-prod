@@ -1,4 +1,4 @@
-# Workforce360 Solution
+# Workforce Base Pre-Prod
 
 
 ## Overview
@@ -12,13 +12,13 @@ pingidentity-solutions-customers-wf-base-pre-prod is designed for pre-production
 
 
 
-### 1. How to deploy the Workforce360 solution stack:
+### 1. How to deploy the Workforce Base Pre-Prod solution stack:
 
 
 
 > For your initial deployment of the stack, we recommend you make no changes to the **docker-compose.yaml** file to ensure you have a successful first-time deployment.
 
-#### a. To start the stack, go to your local **workforce360** directory and enter:
+#### a. To start the stack, go to your local **Workforce Base Pre-Prod** directory and enter:
 
    `docker-compose up -d`
 
