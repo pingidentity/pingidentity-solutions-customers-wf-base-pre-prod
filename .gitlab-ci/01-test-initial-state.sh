@@ -8,8 +8,6 @@ set -eo pipefail
 [ ! -f "$HOME"/.pingidentity/devops ] && \
   cat <<DEVOPS > "$HOME"/.pingidentity/devops
 PING_IDENTITY_ACCEPT_EULA=${PING_IDENTITY_ACCEPT_EULA:-YES}
-PING_IDENTITY_DEVOPS_USER=${PING_IDENTITY_DEVOPS_USER:-pd-solutions@pingidentity.com}
-PING_IDENTITY_DEVOPS_KEY=${PING_IDENTITY_DEVOPS_KEY:-fcdc45b4-1b80-70b8-c5f5-8ad0f0dd067e}
 PING_IDENTITY_DEVOPS_HOME=${PING_IDENTITY_DEVOPS_HOME:-$HOME/projects/devops}
 PING_IDENTITY_DEVOPS_REGISTRY=${PING_IDENTITY_DEVOPS_REGISTRY:-docker.io/pingidentity}
 PING_IDENTITY_DEVOPS_TAG=${PING_IDENTITY_DEVOPS_TAG:-latest}
@@ -25,7 +23,7 @@ sed "s/<git_user>/$GITLAB_USER/;\
 fi
 
 #log into pdsolutions docker account
-docker login --username pdsolutions --password $DOCKER_CRED
+docker login --username $DOCKER_UNAME --password $DOCKER_CRED
 
 docker-compose up \
   --detach \
