@@ -34,205 +34,201 @@ The full set of our DevOps images is automatically pulled from our repository, i
 
 `docker-compose logs -f`
 
-  
 
-  
+
+
 
 Enter **Ctrl+C** to exit the display.
 
-  
 
-  
+
+
 
 #### c. Use either of these commands to display the status of the Docker containers in the stack:
 
-  
 
-  
+
+
 
 * `docker ps` (enter this at intervals)
 
-  
 
-  
+
+
 
 * `watch "docker container ls --format 'table {{.Names}}\t{{.Status}}'"`
 
-  
 
-  
+
+
 
 Refer to the [Docker Compose documentation](https://docs.docker.com/compose/) for more information.
 
-  
 
-  
+
+
 
 Refer to the [Devops GitBook](https://pingidentity-devops.gitbook.io/devops/) for more information on using Ping Identity DevOps.
 
-  
 
-  
+
+
 
 ### 2. How to log in to the product management consoles:
 
-  
 
-  
+
+
 
 #### Ping Data Console for PingDirectory
 
-  
 
-  
+
+
 
 * Console URL: `https://localhost:8443/console`
 
-  
 
-  
+
+
 
 * Server: `pingdirectory`
 
-  
 
-  
+
+
 
 * User: `Administrator`
 
-  
 
-  
+
+
 
 * Password: `2FederateM0re`
 
-  
 
-  
+
+
 
 #### PingFederate
 
-  
 
-  
+
+
 
 * Console URL: `https://localhost:9999/pingfederate/app`
 
-  
 
-  
+
+
 
 * User: `Administrator`
 
-  
 
-  
+
+
 
 * Password: `2FederateM0re`
 
-  
 
-  
+
+
 
 #### Ping Data Console for DataSync
 
-  
 
-  
+
+
 
 * Console URL: `https://localhost:8443/console`
 
-  
 
-  
+
+
 
 * Server: `pingdatasync`
 
-  
 
-  
+
+
 
 * User: `Administrator`
 
-  
 
-  
+
+
 
 * Password: `2FederateM0re`
 
-  
 
-  
+
+
 
 #### PingCentral
 
-  
 
-  
+
+
 
 * Console URL: `https://localhost:9022`
 
-  
 
-  
+
+
 
 * User: `Administrator`
 
-  
 
-  
+
+
 
 * Password: `2Federate`
 
-  
 
-  
+
+
 
 #### PingDelegator
 
-  
 
-  
+
+
 
 * Console URL: `https://localhost:6443`
 
-  
 
-  
+
+
 
  * User: `Administrator`
- 
+
   * Password: `2FederateM0re`
 
 
 ### 3. How to test a SAML application/connection:
 
-
 - From the PingFederate home page, select **SP Connections**.
 
-
-- Next, select the **Sample SAML Connection**.
-
+- Next, select the **Ping SAML Consumer**.
 
 - Click on the **SSO Application Endpoint** hyperlink presented at the top portion of the screen.
 
-  
 - You will be redirected to a Sign On screen.
-  
+
 - Next, enter in a sample username, followed by the sample password. The sample users file can be found within the PingDirectory Server Profile located at:
 
   `./server-profile/pingdirectory/pd.profile/ldif/userRoot/20-sampleusers.ldif`
 
-- After logging in with the sample username and password, you should be brought to a webpage containing a JSON object.
 
-  
-- You can now verify the SAML test was successful if a **SAMLResponse** is present in the **form** value.
+- After logging in with the sample username and password, you will be brought to a webpage labeled **Assertion Validator**.
 
-  
+- You can now verify the SAML test was successful if a **Success** message is present.
+
+
 ### 4. How to test OAuth with a Sample User:
 
 - Navigate to the following URL:
-  
+
   `https://localhost:9031/OAuthPlayground`
 
   *(use `localhost` unless otherwise specified)*
@@ -244,13 +240,13 @@ Refer to the [Devops GitBook](https://pingidentity-devops.gitbook.io/devops/) fo
 
 - Next, enter in a sample username, followed by the sample password. The sample users file can be found within the PingDirectory Server Profile located at:
 
-  
+
   `./server-profile/pingdirectory/pd.profile/ldif/userRoot/20-sampleusers.ldif`
 
 
 - You will then be redirected back to a similar screen. From here, click the **Submit** button once more.
 
-  
+
 - **TOKEN ENDPOINT** page will then be presented. If the OAuth request and response was valid, you will see a **Parsed Response** of **HTTP Status: 200 OK** on the top right of your screen.
 
 
@@ -268,13 +264,13 @@ Refer to the [Devops GitBook](https://pingidentity-devops.gitbook.io/devops/) fo
 
   Username: `Administrator`
   Password: `2FederateM0re`
- 
+
 - You will then be brought to a **Search Users** page.
 
 
 - To view all users, click inside the **Search Users by...** text box.
 
-  
+
 - Hit the return (or Enter) key to display all users from PingDirectory.
 
 ### 6. For information on using Identity Adapters for specific use cases, see example application files in assets directory:
