@@ -31,9 +31,9 @@ do
         if  ${UNHEALTHY_TIMER+"false"} ; then
         UNHEALTHY_TIMER=$SECONDS+120
         fi
-        #check if pingfederate unhealthy, wait 1200 seconds
+        #check if pingfederate unhealthy, wait 120 seconds
         if [ $UNHEALTHY_TIMER -le $SECONDS ]; then
-            echo "Waiting 90 seconds for containers to become healthy..."
+            echo "Waiting 120 seconds for containers to become healthy..."
             echo $UNHEALTHY_CONT | sed -e 's/Up.*unhealthy)/Error: is unhealthy. /'
             docker-compose logs --tail="100"
             echo "$CONT_STATUS"
@@ -55,7 +55,7 @@ do
     #if no containers remaining in capture move on (all containers need to be running)
     if [ "${STARTING_CONT:-0}" == 0 ] && [ $CONTAINERCOUNT -eq $CONTAINERSEXPECTED ]; then
     exit 0
-    fi 
+    fi
 
     #wait
     sleep 30
