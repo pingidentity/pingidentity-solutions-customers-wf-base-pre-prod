@@ -71,7 +71,7 @@ services:
       - pingnet
 
   pingcentral:
-    image: pingidentity/pingcentral:edge
+    image: pingidentity/pingcentral:latest
     command: /tmp/pingcentral_db/pingcentral_standup.sh
     environment:
       - PING_CENTRAL_BLIND_TRUST=true

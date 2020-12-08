@@ -215,9 +215,9 @@ Refer to the [Devops GitBook](https://pingidentity-devops.gitbook.io/devops/) fo
 
 - You will be redirected to a Sign On screen.
 
-- Next, enter in a sample username, followed by the sample password. The sample users file can be found within the PingDirectory Server Profile located at:
+- Next, enter in sampleapptester for the username, followed by the sample password. The sample user(s) for specific use cases can be found within the PingDirectory Server Profile located at:
 
-  `./server-profile/pingdirectory/pd.profile/ldif/userRoot/20-sampleusers.ldif`
+  `./server-profile/pingdirectory/pd.profile/ldif/userRoot/12-sampleusers.ldif`
 
 
 - After logging in with the sample username and password, you will be brought to a webpage labeled **Assertion Validator**.
