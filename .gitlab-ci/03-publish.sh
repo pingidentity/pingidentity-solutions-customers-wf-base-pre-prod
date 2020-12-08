@@ -16,7 +16,7 @@ if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-c360.git"* ]] || [[ "$GITL
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     echo "$GITREMOTENAME found... Using this to push to GitHub..."
     git fetch --unshallow
-    git push "$GITREMOTENAME" HEAD:$BRANCH
+    git push -f "$GITREMOTENAME" HEAD:$BRANCH
 else
     echo "Adding Git remote location..."
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
@@ -27,18 +27,18 @@ else
         echo "$GITREMOTENAME"
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-customers-ciam-base-pre-prod.git"
         git fetch --unshallow
-        git push $GITREMOTENAME HEAD:$BRANCH
+        git push -f $GITREMOTENAME HEAD:$BRANCH
     else
         GITREMOTENAME="gh_location"
         echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/pingidentity-solutions-customers-ciam-base-pre-prod.git"
         git fetch --unshallow
-        git push $GITREMOTENAME HEAD:$BRANCH
+        git push -f $GITREMOTENAME HEAD:$BRANCH
     fi
 fi
 
 if test -n "$CI_COMMIT_TAG"
 then
     echo "using $GITREMOTENAME..."
-    git push $GITREMOTENAME $CI_COMMIT_TAG
+    git push -f $GITREMOTENAME $CI_COMMIT_TAG
 fi
