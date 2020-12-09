@@ -13,18 +13,6 @@ else
     exit 1   
 fi
 
-#check if this is workforce360 or customer360 before defining which to publish to.
-if [[ $CI_PROJECT_PATH == "solutions/customer360" ]]; then
-    GITHUB_REPO_NAME="pingidentity-solutions-customers-ciam-base-pre-prod.git"
-elif [[ $CI_PROJECT_PATH == "solutions/workforce360" ]]; then
-    GITHUB_REPO_NAME="pingidentity-solutions-customers-wf-base-pre-prod.git"
-else
-    #something is wrong and that's bad. Let's stop.
-    echo "Repo name not found in Solutions project list"
-    exit 1
-fi
-
-
 #check if the git remote value is already defined
 GITLOCATION=$(git remote -v)
 GITLOCATIONCHECK=$(echo "$GITLOCATION" | awk '/fetch/ && /push/')
@@ -38,12 +26,12 @@ if [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-c360.git"* ]] || [[ "$GITL
 elif [[ "$GITLOCATIONCHECK" == *"pingidentity-solutions-wf360.git"* ]] || [[ "$GITLOCATIONCHECK" == *"wf-base-pre-prod.git"* ]]; then
     echo "WF360 Git remote location already exists!"
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
-    echo "$GITREMOTENAME found... Using this to push to GitHub..."
+    echo "$GITREMOTENAME found... Using this to push to GitHub. . ."
     git fetch --unshallow
     git push --force $GITREMOTENAME HEAD:$BRANCH
 else
     #if GITLOCATION was not defined, setting it below
-    echo "Adding Git remote location..."
+    echo "Adding Git remote location.."
     GITREMOTENAME=$(echo $GITLOCATIONCHECK | awk '{print $1}')
     if [[ "$GITREMOTENAME" == "gh_location" ]]; then
         echo "Existing gh_location remote location found! Removing and adding proper git remote location..."
@@ -56,7 +44,7 @@ else
     #if really completely undefined setting everything
     else
         GITREMOTENAME="gh_location"
-        echo "$GITREMOTENAME found! Removing and adding proper git remote location..."
+        echo "$GITREMOTENAME found! Removing and adding proper git remote location. ."
         git remote add $GITREMOTENAME "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/pingidentity/$GITHUB_REPO_NAME"
         git fetch --unshallow
         git push --force $GITREMOTENAME HEAD:$BRANCH
