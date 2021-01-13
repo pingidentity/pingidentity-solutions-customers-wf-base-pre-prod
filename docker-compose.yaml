@@ -147,7 +147,7 @@ services:
       - pingdatasync-out:/opt/out
 
   pingdelegator:
-    image: pingidentity/pingdelegator:latest
+    image: pingidentity/pingdelegator:4.2.1-edge
     environment:
       - PD_ENGINE_PUBLIC_PORT=1443
     env_file:
