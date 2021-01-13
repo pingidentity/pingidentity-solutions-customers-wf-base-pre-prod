@@ -71,7 +71,7 @@ services:
       - pingnet
 
   pingcentral:
-    image: pingidentity/pingcentral:edge
+    image: pingidentity/pingcentral:latest
     command: /tmp/pingcentral_db/pingcentral_standup.sh
     environment:
       - PING_CENTRAL_BLIND_TRUST=true
@@ -147,13 +147,26 @@ services:
       - pingdatasync-out:/opt/out
 
   pingdelegator:
-    image: pingidentity/pingdelegator:latest
+    image: pingidentity/pingdelegator:4.2.1-edge
     environment:
       - PD_ENGINE_PUBLIC_PORT=1443
     env_file:
       - ${HOME}/.pingidentity/devops
     ports:
       - "6443:6443"
+    networks:
+      - pingnet
+
+  pingpostreceiver:
+    image: php:7.4.11-apache
+    volumes:
+       - ./server-profile/pingpostreceiver/html/:/var/www/html/
+       - ./server-profile/pingpostreceiver/httpd/php.ini:/usr/local/etc/php/php.ini
+       - ./server-profile/pingpostreceiver/httpd/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    command: /bin/sh -c "a2enmod ssl && docker-php-ext-install mysqli && docker-php-ext-enable mysqli && /usr/local/bin/docker-php-entrypoint apache2-foreground"
+    ports:
+      - 443:443
+      - 80:80
     networks:
       - pingnet
 

@@ -1,3 +1,17 @@
+dn: uid=sampleapptester,ou=People,${USER_BASE_DN}
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+objectClass: pf-connected-identities
+sn: Tester
+cn: Sample App Tester
+givenName: Sample App
+uid: sampleapptester
+mail: sampleapptester@example.com
+userPassword: 2FederateM0re
+pf-connected-identity: auth-source=pf-local-identity:user-id=sampleapptester
+
 dn: uid=wcarver,ou=People,${USER_BASE_DN}
 objectClass: top
 objectClass: person

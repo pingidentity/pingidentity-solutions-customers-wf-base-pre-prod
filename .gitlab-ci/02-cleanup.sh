@@ -10,7 +10,7 @@ then
     test -z "${CI_PROJECT_DIR}" && echo "Invalid call to dirname ${0}" && exit 97
 fi
 
-banner "Cleaning containers and images ( ciTag = ${ciTag} )"
+echo "Cleaning containers and images ( ciTag = ${ciTag} )"
 
 # stop containers
 _containers=$( docker container ls -q | sort | uniq )
